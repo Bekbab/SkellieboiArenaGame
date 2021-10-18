@@ -7,12 +7,11 @@ namespace SkellieboiArenaGame
         public string name;
         Random generator = new Random();
 
-        int damage;
 
         public int chosenAttack;
         public string ChooseAttack(Skeleton target)
         {
-            int chosenAttack = generator.Next(3);
+            chosenAttack = generator.Next(3);
 
             if (chosenAttack == 0)
             {
@@ -41,26 +40,28 @@ namespace SkellieboiArenaGame
 
         }
 
-        public int weaponDamage(Skeleton target) //funkar inte
+        public int weaponDamage(Skeleton target)
         {
-            if (chosenAttack == 1)
+            if (chosenAttack == 0)
             {
-                int damage = BoneZone();
+                return BoneZone();
             }
 
             if (chosenAttack == 1)
             {
-                int damage = BreakALeg(target);
+                return BreakALeg(target);
             }
 
             if (chosenAttack == 2)
             {
 
-                int damage = RattleMeBones(target);
-
+                return RattleMeBones(target);
+            }
+            else
+            {
+                return 0;
             }
 
-            return damage;
         }
 
         public int BoneZone()

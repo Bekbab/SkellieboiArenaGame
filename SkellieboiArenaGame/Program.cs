@@ -4,55 +4,31 @@ namespace SkellieboiArenaGame
 {
     class Program
     {
+
         static void Main(string[] args)
         {
 
+            Player p1 = new Player();
 
-            Skeleton s1 = new Skeleton();
-            Skeleton s2 = new Skeleton();
+            Player.chooseName();
+            p1.SkellieBetOn(p1.GetBet());
 
-            Console.WriteLine("Name the first skeleton");
-            s1.name = Console.ReadLine();
-
-            Console.WriteLine("Name the second skeleton");
-            s2.name = Console.ReadLine();
-
-            Console.WriteLine($"Which skeleton do you wish to bet on? If they win you win, if they lose you lose. {s1.name} or {s2.name}");
-            while (Skeleton.betGotten == false)
+            while (Player.bothSkelsAlive == true)
             {
+                Player.s1.Attack(Player.s2);
 
-                Skeleton.skellieBet = Console.ReadLine();
-
-                if (Skeleton.skellieBet == s1.name)
+                if (Player.s2.isAlive == true)
                 {
-                    Skeleton.SkellieBetOn(s1);
-                    Skeleton.betGotten = true;
-
+                    Player.s2.Status();
+                    Console.ReadLine();
+                    Player.s2.Attack(Player.s1);
+                    Player.s1.Status();
                 }
-                else if (Skeleton.skellieBet == s2.name)
-                {
-                    Skeleton.SkellieBetOn(s2);
-                    Skeleton.betGotten = true;
-                }
-                else
-                {
-                    Console.WriteLine("Name error. Try again.");
-                }
-            }
 
-            while (Skeleton.bothAlive == true)
-            {
-
-                s1.Attack(s2);
-                s2.Status();
-
-                Console.ReadLine();
-
-                s2.Attack(s1);
-                s1.Status();
 
                 Console.ReadLine();
             }
+            p1.SkellieBetOn(p1.GetBet());
 
 
 

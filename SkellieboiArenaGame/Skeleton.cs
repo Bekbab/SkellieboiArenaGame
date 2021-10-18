@@ -4,17 +4,9 @@ namespace SkellieboiArenaGame
 {
     public class Skeleton
     {
-        private int hp = 200;
+        private int hp = 50;
 
         public string name;
-
-        public static bool bothAlive = true;
-
-        public static bool betGotten = false;
-
-        public static string skellieBet;
-
-
         public bool isAlive = true;
 
         BoneCannon bone = new BoneCannon();
@@ -23,18 +15,7 @@ namespace SkellieboiArenaGame
 
         public bool rattled = false;
 
-        public static void SkellieBetOn(Skeleton target)
-        {
-            if (target.isAlive == false)
-            {
-                Console.WriteLine($"The skeleton you bet on ({target}) has died. You lost the bet.");
-            }
-            else if (bothAlive == false && target.isAlive == true)
-            {
-                Console.WriteLine($"The skeleton you bet on ({target}) has emerged victorious. You won the bet!");
-            }
 
-        }
         public void TakeDamage(int amount)
         {
 
@@ -43,8 +24,7 @@ namespace SkellieboiArenaGame
             {
                 Console.WriteLine($"{name} has died");
                 isAlive = false;
-                bothAlive = false;
-
+                Player.bothSkelsAlive = false;
             }
         }
         public void Attack(Skeleton target)
@@ -53,20 +33,26 @@ namespace SkellieboiArenaGame
             {
                 string attackName = bone.ChooseAttack(target);
 
-                int weaponDamage = bone.weaponDamage(target); //Funkar fortfarande inte
+                int weaponDamage = bone.weaponDamage(target);
 
                 if (legBroken)
                 {
                     weaponDamage -= 5;
                 }
-                target.TakeDamage(weaponDamage);
 
                 string damageString = weaponDamage + "";
 
                 Console.WriteLine($"{name} used {attackName} on {target.name}. It deals {damageString} damage.");
 
+                target.TakeDamage(weaponDamage);
+
             }
-            rattled = false;
+
+            else
+            {
+                Console.WriteLine($"{name} is too rattled to fight");
+                rattled = false;
+            }
 
         }
 
@@ -74,12 +60,17 @@ namespace SkellieboiArenaGame
         public void Status()
         {
             string hpString = hp + "";
-            Console.WriteLine($"{name}'s HP is{hpString};");
+            Console.WriteLine($"{name}'s HP is {hpString};");
 
             if (legBroken == true)
             {
                 Console.WriteLine($"{name}'s legs are broken.");
             }
+            if (rattled == true)
+            {
+                Console.WriteLine($"{name} is rattled.");
+            }
+
         }
 
     }
